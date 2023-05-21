@@ -103,7 +103,7 @@ def get_embedding(
 
     """
     text = text.replace("\n", " ")
-    return openai.Embedding.create(input=[text], engine=engine, **kwargs)["data"][0][
+    return openai.Embedding.create(input=[text], model=engine, engine=engine, **kwargs)["data"][0][
         "embedding"
     ]
 
@@ -124,7 +124,7 @@ async def aget_embedding(
     # replace newlines, which can negatively affect performance.
     text = text.replace("\n", " ")
 
-    return (await openai.Embedding.acreate(input=[text], engine=engine, **kwargs))[
+    return (await openai.Embedding.acreate(input=[text], model=engine, engine=engine, **kwargs))[
         "data"
     ][0]["embedding"]
 
@@ -147,7 +147,7 @@ def get_embeddings(
     # replace newlines, which can negatively affect performance.
     list_of_text = [text.replace("\n", " ") for text in list_of_text]
 
-    data = openai.Embedding.create(input=list_of_text, engine=engine, **kwargs).data
+    data = openai.Embedding.create(input=list_of_text, model=engine, engine=engine, **kwargs).data
     return [d["embedding"] for d in data]
 
 
@@ -170,7 +170,7 @@ async def aget_embeddings(
     list_of_text = [text.replace("\n", " ") for text in list_of_text]
 
     data = (
-        await openai.Embedding.acreate(input=list_of_text, engine=engine, **kwargs)
+        await openai.Embedding.acreate(input=list_of_text, model=engine, engine=engine, **kwargs)
     ).data
     return [d["embedding"] for d in data]
 
